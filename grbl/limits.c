@@ -163,11 +163,6 @@ void limits_go_home(uint8_t cycle_mask)
   float max_travel = 0.0;
   uint8_t idx;
   for (idx=0; idx<N_AXIS; idx++) {
-    // Initialize step pin masks
-    step_pin[idx] = get_step_pin_mask(idx);
-    #ifdef COREXY
-      if ((idx==A_MOTOR)||(idx==B_MOTOR)) { step_pin[idx] = (get_step_pin_mask(X_AXIS)|get_step_pin_mask(Y_AXIS)); }
-    #endif
 
     if (bit_istrue(cycle_mask,bit(idx))) {
       // Set target based on max_travel setting. Ensure homing switches engaged with search scalar.
@@ -273,7 +268,7 @@ void limits_go_home(uint8_t cycle_mask)
         }
       }
 
-    } while (STEP_MASK & axislock);
+    } while (7 & axislock);
 
     st_reset(); // Immediately force kill steppers and reset step segment buffer.
     delay_ms(settings.homing_debounce_delay); // Delay to allow transient dynamics to dissipate.

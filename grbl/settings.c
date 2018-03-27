@@ -237,11 +237,9 @@ uint8_t settings_store_global_setting(uint8_t parameter, float value) {
       case 1: settings.stepper_idle_lock_time = int_value; break;
       case 2:
         settings.step_invert_mask = int_value;
-        st_generate_step_dir_invert_masks(); // Regenerate step and direction port invert masks.
         break;
       case 3:
         settings.dir_invert_mask = int_value;
-        st_generate_step_dir_invert_masks(); // Regenerate step and direction port invert masks.
         break;
       case 4: // Reset to ensure change. Immediate re-init may cause problems.
         if (int_value) { settings.flags |= BITFLAG_INVERT_ST_ENABLE; }
@@ -319,18 +317,18 @@ void settings_init() {
 // Returns step pin mask according to Grbl internal axis indexing.
 uint8_t get_step_pin_mask(uint8_t axis_idx)
 {
-  if ( axis_idx == X_AXIS ) { return((1<<X_STEP_BIT)); }
-  if ( axis_idx == Y_AXIS ) { return((1<<Y_STEP_BIT)); }
-  return((1<<Z_STEP_BIT));
+  if ( axis_idx == X_AXIS ) { return((1<<X_BIT)); }
+  if ( axis_idx == Y_AXIS ) { return((1<<Y_BIT)); }
+  return((1<<Z_BIT));
 }
 
 
 // Returns direction pin mask according to Grbl internal axis indexing.
 uint8_t get_direction_pin_mask(uint8_t axis_idx)
 {
-  if ( axis_idx == X_AXIS ) { return((1<<X_DIRECTION_BIT)); }
-  if ( axis_idx == Y_AXIS ) { return((1<<Y_DIRECTION_BIT)); }
-  return((1<<Z_DIRECTION_BIT));
+  if ( axis_idx == X_AXIS ) { return((1<<X_BIT)); }
+  if ( axis_idx == Y_AXIS ) { return((1<<Y_BIT)); }
+  return((1<<Z_BIT));
 }
 
 

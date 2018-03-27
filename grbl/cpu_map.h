@@ -33,21 +33,28 @@
   #define SERIAL_RX     USART_RX_vect
   #define SERIAL_UDRE   USART_UDRE_vect
 
-  // Define step pulse output pins. NOTE: All step bit pins must be on the same port.
-  #define STEP_DDR        DDRD
-  #define STEP_PORT       PORTD
-  #define X_STEP_BIT      2  // Uno Digital Pin 2
-  #define Y_STEP_BIT      3  // Uno Digital Pin 3
-  #define Z_STEP_BIT      4  // Uno Digital Pin 4
-  #define STEP_MASK       ((1<<X_STEP_BIT)|(1<<Y_STEP_BIT)|(1<<Z_STEP_BIT)) // All step bits
+  // Define X motor output pins. NOTE: All step bit pins must be on the same port.
+  #define X_DDR           DDRD
+  #define X_PORT          PORTD
+  #define X_A_PIN         2  // Uno Digital Pin 2
+  #define X_B_PIN         3  // Uno Digital Pin 3
+  #define X_C_PIN         4  // Uno Digital Pin 4
+  #define X_D_PIN         5  // Uno Digital Pin 5
+  #define X_MASK          ((1<<X_A_PIN)|(1<<X_B_PIN)|(1<<X_C_PIN)|(1<<X_D_PIN))
 
-  // Define step direction output pins. NOTE: All direction pins must be on the same port.
-  #define DIRECTION_DDR     DDRD
-  #define DIRECTION_PORT    PORTD
-  #define X_DIRECTION_BIT   5  // Uno Digital Pin 5
-  #define Y_DIRECTION_BIT   6  // Uno Digital Pin 6
-  #define Z_DIRECTION_BIT   7  // Uno Digital Pin 7
-  #define DIRECTION_MASK    ((1<<X_DIRECTION_BIT)|(1<<Y_DIRECTION_BIT)|(1<<Z_DIRECTION_BIT)) // All direction bits
+  // Define Y motor output pins. NOTE: All step bit pins must be on the same port.
+  #define Y_DDR           DDRC
+  #define Y_PORT          PORTC
+  #define Y_A_PIN         0  // Uno Digital Pin A0
+  #define Y_B_PIN         1  // Uno Digital Pin A1
+  #define Y_C_PIN         2  // Uno Digital Pin A2
+  #define Y_D_PIN         3  // Uno Digital Pin A3
+  #define Y_MASK          ((1<<Y_A_PIN)|(1<<Y_B_PIN)|(1<<Y_C_PIN)|(1<<Y_D_PIN))
+
+  // Define axes bits.
+  #define X_BIT           0
+  #define Y_BIT           1
+  #define Z_BIT           2
 
   // Define stepper driver enable/disable output pin.
   #define STEPPERS_DISABLE_DDR    DDRB
@@ -93,22 +100,22 @@
   #endif
 
   // Define flood and mist coolant enable output pins.
-  #define COOLANT_FLOOD_DDR   DDRC
-  #define COOLANT_FLOOD_PORT  PORTC
-  #define COOLANT_FLOOD_BIT   3  // Uno Analog Pin 3
-  #define COOLANT_MIST_DDR   DDRC
-  #define COOLANT_MIST_PORT  PORTC
-  #define COOLANT_MIST_BIT   4  // Uno Analog Pin 4
+  #define COOLANT_FLOOD_DDR   DDRD
+  #define COOLANT_FLOOD_PORT  PORTD
+  #define COOLANT_FLOOD_BIT   6  // Uno Digital Pin 6
+  #define COOLANT_MIST_DDR   DDRD
+  #define COOLANT_MIST_PORT  PORTD
+  #define COOLANT_MIST_BIT   7  // Uno Digital Pin 7
 
   // Define user-control controls (cycle start, reset, feed hold) input pins.
   // NOTE: All CONTROLs pins must be on the same port and not on a port with other input pins (limits).
   #define CONTROL_DDR       DDRC
   #define CONTROL_PIN       PINC
   #define CONTROL_PORT      PORTC
-  #define CONTROL_RESET_BIT         0  // Uno Analog Pin 0
-  #define CONTROL_FEED_HOLD_BIT     1  // Uno Analog Pin 1
-  #define CONTROL_CYCLE_START_BIT   2  // Uno Analog Pin 2
-  #define CONTROL_SAFETY_DOOR_BIT   1  // Uno Analog Pin 1 NOTE: Safety door is shared with feed hold. Enabled by config define.
+  #define CONTROL_RESET_BIT         4  // Uno Analog Pin 4
+  #define CONTROL_FEED_HOLD_BIT     5  // Uno Analog Pin 5
+  #define CONTROL_CYCLE_START_BIT   6  // Uno Analog Pin 6
+  #define CONTROL_SAFETY_DOOR_BIT   5  // Uno Analog Pin 5 NOTE: Safety door is shared with feed hold. Enabled by config define.
   #define CONTROL_INT       PCIE1  // Pin change interrupt enable pin
   #define CONTROL_INT_vect  PCINT1_vect
   #define CONTROL_PCMSK     PCMSK1 // Pin change interrupt register
@@ -119,7 +126,7 @@
   #define PROBE_DDR       DDRC
   #define PROBE_PIN       PINC
   #define PROBE_PORT      PORTC
-  #define PROBE_BIT       5  // Uno Analog Pin 5
+  #define PROBE_BIT       7  // Uno Analog Pin 7
   #define PROBE_MASK      (1<<PROBE_BIT)
 
   // Variable spindle configuration below. Do not change unless you know what you are doing.
