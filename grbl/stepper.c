@@ -400,7 +400,7 @@ ISR(TIMER1_COMPA_vect)
     }
     else {
         sys_position[Y_AXIS]++;
-        up_x_step = up_step_forward(up_x_step);
+        up_y_step = up_step_forward(up_y_step);
         Y_PORT = (up_get_pins(up_y_step)) << Y_A_PIN;
     }
   }

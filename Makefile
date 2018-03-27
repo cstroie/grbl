@@ -28,9 +28,11 @@
 #                is connected.
 # FUSES ........ Parameters for avrdude to flash the fuses appropriately.
 
+# avrdude -Cavrdude.conf -v -V -patmega328p -carduino -P/dev/ttyUSB0 -b57600 -D -Uflash:w:/tmp/arduino_build_127386/grblUpload.ino.hex:i 
+
 DEVICE     ?= atmega328p
 CLOCK      = 16000000
-PROGRAMMER ?= -c avrisp2 -P usb
+PROGRAMMER ?= -c arduino -P /dev/ttyUSB0 -b 57600 -D
 SOURCE    = main.c motion_control.c gcode.c spindle_control.c coolant_control.c serial.c \
              protocol.c stepper.c eeprom.c settings.c planner.c nuts_bolts.c limits.c jog.c\
              print.c probe.c report.c system.c unipolar.c

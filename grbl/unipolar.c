@@ -22,7 +22,8 @@
 #include "grbl.h"
 
 /* The order is DBCA */
-uint8_t half_step[] = {0b0001, 0b0101, 0b0100, 0b0110, 0b0010, 0b1010, 0b1000, 0b1001};
+//uint8_t half_step[] = {0b0001, 0b0101, 0b0100, 0b0110, 0b0010, 0b1010, 0b1000, 0b1001};
+uint8_t half_step[] = {0b0001, 0b0011, 0b0010, 0b0110, 0b0100, 0b1100, 0b1000, 0b1001};
 uint8_t full_step[] = {0b0101, 0b0110, 0b1010, 0b1001};
 uint8_t wave_step[] = {0b0001, 0b0100, 0b0010, 0b1000};
 
