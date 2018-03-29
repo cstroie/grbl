@@ -58,7 +58,7 @@ void spindle_init()
 
 uint8_t spindle_get_state()
 {
-	#ifdef VARIABLE_SPINDLE
+    #ifdef VARIABLE_SPINDLE
         #ifdef USE_SPINDLE_DIR_AS_ENABLE_PIN
               // No spindle direction output pin. 
             #ifdef INVERT_SPINDLE_ENABLE_PIN
@@ -72,16 +72,16 @@ uint8_t spindle_get_state()
                 else { return(SPINDLE_STATE_CW); }
             }
         #endif
-	#else
-		#ifdef INVERT_SPINDLE_ENABLE_PIN
+    #else
+        #ifdef INVERT_SPINDLE_ENABLE_PIN
             if (bit_isfalse(SPINDLE_ENABLE_PORT,(1<<SPINDLE_ENABLE_BIT))) { 
-		#else
+        #else
             if (bit_istrue(SPINDLE_ENABLE_PORT,(1<<SPINDLE_ENABLE_BIT))) {
-		#endif
+        #endif
                 if (SPINDLE_DIRECTION_PORT & (1<<SPINDLE_DIRECTION_BIT)) { return(SPINDLE_STATE_CCW); }
                 else { return(SPINDLE_STATE_CW); }
             }
-	#endif
+    #endif
 	return(SPINDLE_STATE_DISABLE);
 }
 
@@ -91,24 +91,23 @@ uint8_t spindle_get_state()
 // Called by spindle_init(), spindle_set_speed(), spindle_set_state(), and mc_reset().
 void spindle_stop()
 {
-    #ifdef VARIABLE_SPINDLE
-        SPINDLE_TCCRA_REGISTER &= ~(1<<SPINDLE_COMB_BIT); // Disable PWM. Output voltage is zero.
-        #ifdef USE_SPINDLE_DIR_AS_ENABLE_PIN
-            #ifdef INVERT_SPINDLE_ENABLE_PIN
-                SPINDLE_ENABLE_PORT |= (1<<SPINDLE_ENABLE_BIT);  // Set pin to high
-            #else
-                SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT); // Set pin to low
-            #endif
-        #endif
-    #else
-        #ifdef INVERT_SPINDLE_ENABLE_PIN
-            SPINDLE_ENABLE_PORT |= (1<<SPINDLE_ENABLE_BIT);  // Set pin to high
-        #else
-            SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT); // Set pin to low
-        #endif
+  #ifdef VARIABLE_SPINDLE
+    SPINDLE_TCCRA_REGISTER &= ~(1<<SPINDLE_COMB_BIT); // Disable PWM. Output voltage is zero.
+    #ifdef USE_SPINDLE_DIR_AS_ENABLE_PIN
+      #ifdef INVERT_SPINDLE_ENABLE_PIN
+        SPINDLE_ENABLE_PORT |= (1<<SPINDLE_ENABLE_BIT);  // Set pin to high
+      #else
+        SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT); // Set pin to low
+      #endif
     #endif
+  #else
+    #ifdef INVERT_SPINDLE_ENABLE_PIN
+      SPINDLE_ENABLE_PORT |= (1<<SPINDLE_ENABLE_BIT);  // Set pin to high
+    #else
+      SPINDLE_ENABLE_PORT &= ~(1<<SPINDLE_ENABLE_BIT); // Set pin to low
+    #endif
+  #endif
 }
-
 
 #ifdef VARIABLE_SPINDLE
   // Sets spindle speed PWM output and enable pin, if configured. Called by spindle_set_state()
@@ -136,7 +135,8 @@ void spindle_stop()
     #endif
   }
 
-
+  #ifdef ENABLE_PIECEWISE_LINEAR_SPINDLE
+  
   // Called by spindle_set_state() and step segment generator. Keep routine small and efficient.
   uint8_t spindle_compute_pwm_value(float rpm) // 328p PWM register is 8-bit.
   {
